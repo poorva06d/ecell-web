@@ -1,11 +1,9 @@
-/* Small JS: typewriter, scroll-based animations, modal for projects, theme toggle, form stub */
-
 document.addEventListener('DOMContentLoaded', () => {
   // YEAR
   document.getElementById('year').textContent = new Date().getFullYear();
 
   // TYPEWRITER
-  const phrases = ["Frontend Developer", "UI/UX Enthusiast", "Loves JavaScript", "Open to collaboration"];
+  const phrases = ["Frontend Developer", "Loves JavaScript", "Open to collaboration"];
   let tIndex = 0, chIndex = 0, forward = true;
   const typeNode = document.getElementById('typewriter');
   const cursor = document.querySelector('.cursor');
@@ -34,30 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   // restore theme
   if(localStorage.getItem('theme') === 'light') body.classList.add('light');
-
-  // MENU (mobile)
-  const menuToggle = document.getElementById('menu-toggle');
-  const nav = document.getElementById('main-nav');
-  menuToggle.addEventListener('click', ()=>{
-    if(nav.style.display === 'flex') nav.style.display = 'none';
-    else nav.style.display = 'flex';
-  });
-
-  // SKILL BARS: animate when in view
-  const skillBars = document.querySelectorAll('.bar > div');
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        const el = e.target;
-        const level = el.getAttribute('data-level');
-        el.style.width = level + '%';
-      } else {
-        // optionally collapse when out of view:
-        //e.target.style.width = '0%';
-      }
-    });
-  }, {threshold: 0.45});
-  skillBars.forEach(b => obs.observe(b));
 
   // PROJECT MODAL
   const projects = document.querySelectorAll('.project');
@@ -89,20 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
   modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
   function closeModal(){ modal.style.display = 'none'; modal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
 
-  // CONTACT FORM (simple JS stub)
-  const form = document.getElementById('contact-form');
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = form.name.value.trim();
-    const email = form.email.value.trim();
-    const message = form.message.value.trim();
-    if(!name || !email || !message){ alert('Please complete the form.'); return; }
-    // Option 1: open mailto (simple)
-    const mailto = `mailto:you@example.com?subject=${encodeURIComponent('Portfolio contact from '+name)}&body=${encodeURIComponent(message + '\n\n--\n' + name + '\n' + email)}`;
-    window.location.href = mailto;
-    // Option 2: send via API — replace with your backend or Formspree
-  });
-
   // Smooth scroll for nav links
   document.querySelectorAll('a[href^="#"]').forEach(a=>{
     a.addEventListener('click', function(ev){
@@ -114,5 +74,5 @@ document.addEventListener('DOMContentLoaded', () => {
       if(nav.style.display === 'flex' && window.innerWidth < 980) nav.style.display = 'none';
     });
   });
-
 });
+
